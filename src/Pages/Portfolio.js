@@ -4,6 +4,8 @@ import Adeptia from '../assets/Project_img/Adeptia.jpg';
 import SOLBooks from '../assets/Project_img/Solbooks.jpg';
 import YHH from '../assets/Project_img/YHH.png';
 import Ekhtibary from '../assets/Project_img/Ekhtibary.jpg';
+import Sol from '../assets/Project_img/Sol.jpg';
+import Jtak from '../assets/Project_img/Jtak.jpg';
 import React from 'react';
 import '../components/Style.css';
 import { Container, Row, Col, Carousel } from 'react-bootstrap';
@@ -24,12 +26,12 @@ export function Portfolio () {
           image: sorcero,
           link: "/Sorcero", // Link to the Sorcero project page
         },
-        {
-          title: "Adeptia",
-          description: "Adeptia offers a no-code platform that simplifies data integration and process automation, allowing organizations to connect applications and streamline workflows effectively.",
-          image: Adeptia,
-          link: "/Adeptia", // Link to the Adeptia project page
-        },
+        // {
+        //   title: "Adeptia",
+        //   description: "Adeptia offers a no-code platform that simplifies data integration and process automation, allowing organizations to connect applications and streamline workflows effectively.",
+        //   image: Adeptia,
+        //   link: "/Adeptia", // Link to the Adeptia project page
+        // },
         {
           title: "SOLBooks",
           description: "SOLBooks is an accounting application designed to help businesses manage their finances efficiently, providing tools for invoicing, expense tracking, and financial reporting.",
@@ -47,6 +49,18 @@ export function Portfolio () {
           description: "Ekhtibary is a platform designed for managing educational assessments.",
           image: Ekhtibary,
           link: "/Ekhtibary", // Link to the Ekhtibary project page
+        },
+        {
+          title: "Speed Of Light",
+          description: "This project is focused on empowering companies and startups by crafting outstanding digital products that enhance their presence and impact. By delivering innovative solutions, the project aims to drive growth and success in a competitive landscape where technical excellence is key.",
+          image: Sol,
+          link: "https://www.behance.net/gallery/137982007/Web-UI-UX-Design", // Link to the SOL project page
+        },
+        {
+          title: "J-tek",
+          description: "An ecommerce app that works with your location to give you fast delivery and easy access to product you want to buy.",
+          image: Jtak,
+          link: "https://www.behance.net/gallery/147005067/E-Commerce-App-UI-UX-Design-Case-Study", // Link to the SOL project page
         },
       ];
     

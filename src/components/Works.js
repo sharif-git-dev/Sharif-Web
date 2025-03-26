@@ -13,18 +13,36 @@ import { color } from 'framer-motion';
 const Services = () => {
   const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
   const projects = [
+    // {
+    //   title: "Sorcero",
+    //   description: "Sorcero transforms scattered medical data into high-quality insights, providing teams with instant access to information that improves and saves patient lives.",
+    //   image: sorcero,
+    //   link: "/Sorcero",
+    // },
+    // {
+    //   title: "Adeptia",
+    //   description: "Adeptia offers a no-code platform that simplifies data integration and process automation, allowing organizations to connect applications and streamline workflows effectively.",
+    //   image: Adeptia,
+    //   link: "/Adeptia",
+    // },
     {
-      title: "Sorcero",
-      description: "Sorcero transforms scattered medical data into high-quality insights, providing teams with instant access to information that improves and saves patient lives.",
-      image: sorcero,
-      link: "/Sorcero",
+      title: "SOLBooks",
+      description: "SOLBooks is an accounting application designed to help businesses manage their finances efficiently, providing tools for invoicing, expense tracking, and financial reporting.",
+      image: SOLBooks,
+      link: "/SOLBooks", // Link to the SOLBooks project page
     },
     {
-      title: "Adeptia",
-      description: "Adeptia offers a no-code platform that simplifies data integration and process automation, allowing organizations to connect applications and streamline workflows effectively.",
-      image: Adeptia,
-      link: "/Adeptia",
+      title: "YH&H Project",
+      description: "The YH&H Project is a project management website that streamlines team collaboration, task tracking, and project timelines.",
+      image: YHH,
+      link: "/Yh-h", // Add the link for the YH&H project
     },
+    // {
+    //   title: "Ekhtibary",
+    //   description: "Ekhtibary is a platform designed for managing educational assessments.",
+    //   image: Ekhtibary,
+    //   link: "/Ekhtibary", // Link to the Ekhtibary project page
+    // },
   ];
 
   return (

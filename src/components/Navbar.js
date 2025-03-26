@@ -9,7 +9,7 @@ import Contactme from "./Contactmepopup";
 
 const Navbar = () => {
   const [showNavbar, setShowNavbar] = useState(true);
-  const [lastScrollTop, setLastScrollTop] = useState(0);
+  const lastScrollTop = useRef(0); // Use useRef to store the last scroll position
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
   const drawerRef = useRef(null);
@@ -17,17 +17,19 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScroll = window.pageYOffset;
-      if (currentScroll > lastScrollTop && currentScroll > 50) {
-        setShowNavbar(false); // Hide navbar when scrolling down
+
+      if (currentScroll > lastScrollTop.current && currentScroll > 50) {
+        setShowNavbar(false); // Hide when scrolling down
       } else {
-        setShowNavbar(true); // Show navbar when scrolling up
+        setShowNavbar(true); // Show when scrolling up
       }
-      setLastScrollTop(currentScroll <= 0 ? 0 : currentScroll);
+
+      lastScrollTop.current = currentScroll <= 0 ? 0 : currentScroll; // Update the last scroll position
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollTop]);
+  }, []); // No need for dependencies, as useRef doesn’t trigger re-renders
 
   useEffect(() => {
     const handleResize = () => {
@@ -64,45 +66,46 @@ const Navbar = () => {
   const handleClose = () => setShowModal(false);
 
   return (
-      <div className={`bg-transparent navbar ${showNavbar ? 'navbar-show' : 'navbar-hide'}`}>
-        <Container>
-          <Row className='align-items-center w-100'>
-            <Col>
-              <Linkto to='/' className='logo'>Sharif</Linkto>
-            </Col>
-            <Col className="text-end">
-              {isMobileView ? (
-                <div className="navbar-drawer-icon" onClick={toggleDrawer}>
-                  <FaBars size={24} />
-                </div>
-              ) : (
-                <ul className="navbar-links">
-                  <li><Linkto to="/Services" smooth duration={500}>Services</Linkto></li>
-                  <li><Linkto to="/Portfolio" smooth duration={500}>Portfolio</Linkto></li>
-                  <li><Linkto to="/About" smooth duration={500}>About</Linkto></li>
-                  <li  onClick={handleShow}><Linkto>  Contact  </Linkto></li>
-                      <Contactme show={showModal} handleClose={handleClose} />                </ul>
-              )}
-            </Col>
-          </Row>
-
-          {/* Drawer menu for mobile */}
-          <div className='navsparent'>
-            <div
-              ref={drawerRef}
-              className={`navbar-drawer ${isDrawerOpen ? 'navbar-drawer-open' : ''}`}
-            >
-              <ul className="drawer-links">
-                <li><Linkto to="/Services" smooth duration={500} onClick={toggleDrawer}>Services</Linkto></li>
-                <li><Linkto to="/Portfolio" smooth duration={500} onClick={toggleDrawer}>Portfolio</Linkto></li>
-                <li><Linkto to="/About" smooth duration={500} onClick={toggleDrawer}>About</Linkto></li>
-                <li  onClick={handleShow}><Linkto>  Contact  </Linkto></li>
-                      <Contactme show={showModal} handleClose={handleClose} />   
+    <div className={`bg-transparent navbar ${showNavbar ? 'navbar-show' : 'navbar-hide'}`}>
+      <Container>
+        <Row className='align-items-center w-100'>
+          <Col>
+            <Linkto to='/' className='logo'>Sharif</Linkto>
+          </Col>
+          <Col className="text-end">
+            {isMobileView ? (
+              <div className="navbar-drawer-icon" onClick={toggleDrawer}>
+                <FaBars size={24} />
+              </div>
+            ) : (
+              <ul className="navbar-links">
+                <li><Linkto to="/Services" smooth duration={500}>Services</Linkto></li>
+                <li><Linkto to="/Portfolio" smooth duration={500}>Portfolio</Linkto></li>
+                <li><Linkto to="/About" smooth duration={500}>About</Linkto></li>
+                <li onClick={handleShow}><Linkto>Contact</Linkto></li>
+                <Contactme show={showModal} handleClose={handleClose} />
               </ul>
-            </div>
+            )}
+          </Col>
+        </Row>
+
+        {/* Drawer menu for mobile */}
+        <div className='navsparent'>
+          <div
+            ref={drawerRef}
+            className={`navbar-drawer ${isDrawerOpen ? 'navbar-drawer-open' : ''}`}
+          >
+            <ul className="drawer-links">
+              <li><Linkto to="/Services" smooth duration={500} onClick={toggleDrawer}>Services</Linkto></li>
+              <li><Linkto to="/Portfolio" smooth duration={500} onClick={toggleDrawer}>Portfolio</Linkto></li>
+              <li><Linkto to="/About" smooth duration={500} onClick={toggleDrawer}>About</Linkto></li>
+              <li onClick={handleShow}><Linkto>Contact</Linkto></li>
+              <Contactme show={showModal} handleClose={handleClose} />
+            </ul>
           </div>
-        </Container>
-      </div>
+        </div>
+      </Container>
+    </div>
   );
 };
 
