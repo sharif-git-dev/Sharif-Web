@@ -1,14 +1,81 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sharif Jamo</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
-</head>
-<body>
-  <div id="root"></div> <!-- React will mount the app here -->
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0e0f0d" />
+    <meta
+      name="description"
+      content="Sharif Jamo is a UX/UI designer, front-end developer and AI specialist. Product design for SaaS and mobile, web apps in React and Flutter, and AI-powered workflows."
+    />
+    <title>Sharif Jamo — UX/UI Designer, Front-End Developer &amp; AI Specialist</title>
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Sharif Jamo" />
+    <meta
+      property="og:title"
+      content="Sharif Jamo — UX/UI Designer, Front-End Developer &amp; AI Specialist"
+    />
+    <meta
+      property="og:description"
+      content="Product design for SaaS and mobile, web apps in React and Flutter, and AI-powered workflows."
+    />
+    <meta property="og:image" content="%PUBLIC_URL%/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" type="image/svg+xml" href="%PUBLIC_URL%/favicon.svg" />
+    <link rel="icon" sizes="any" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Set the theme before first paint so there is no flash of the wrong one. -->
+    <script>
+      (function () {
+        var theme = null;
+        try {
+          theme = localStorage.getItem("sj-theme");
+        } catch (e) {}
+        if (theme !== "light" && theme !== "dark") {
+          theme =
+            window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches
+              ? "light"
+              : "dark";
+        }
+        document.documentElement.setAttribute("data-theme", theme);
+
+        // Motion: follow the system unless the visitor chose otherwise.
+        var motion = null;
+        try {
+          motion = localStorage.getItem("sj-motion");
+        } catch (e) {}
+        var reduce =
+          motion === "off" ||
+          (motion !== "on" &&
+            window.matchMedia &&
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+        document.documentElement.setAttribute("data-motion", reduce ? "reduce" : "full");
+      })();
+    </script>
+    <style>
+      html {
+        background: #0e0f0d;
+      }
+      html[data-theme="light"] {
+        background: #f5f4ef;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      Please enable JavaScript to explore Sharif Jamo’s portfolio. You can also
+      reach me at info@sharifjamo.com.
+    </noscript>
+    <div id="root"></div>
+  </body>
 </html>

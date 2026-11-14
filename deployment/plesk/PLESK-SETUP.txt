@@ -1,0 +1,92 @@
+SHARIFJAMO.COM — DIRECT CONTACT FORM
+
+Prepared for PHP 8.2 / Apache FPM on the existing Plesk subscription.
+The ZIP contains website/ (the complete production build, including api/)
+and private-config/config.example.php (a template, with no real password).
+
+1. BACK UP THE CURRENT WEBSITE
+Use Plesk File Manager to archive the existing website before replacing files.
+Document root:
+/var/www/vhosts/sharifjamo-portfolio.com/sharifjamo.com
+
+2. UPLOAD THE WEBSITE
+Upload the CONTENTS of website/ into the document root above, merging the
+directories and replacing this site's existing build files. Do not upload the
+outer website/ folder as a new subdirectory. Keep unrelated server files,
+existing root .htaccess rules, mail, forwarding and DNS unchanged.
+The endpoint must end up at:
+/var/www/vhosts/sharifjamo-portfolio.com/sharifjamo.com/api/contact.php
+
+3. CREATE THE PRIVATE CONFIGURATION
+In the subscription's private directory, create:
+/var/www/vhosts/sharifjamo-portfolio.com/private/sharifjamo-contact
+
+Copy private-config/config.example.php from this package into that directory
+and rename it config.php. This directory is OUTSIDE the website document root.
+Do not put the configuration in website/, public/, api/, or the React source.
+
+Enter the password for the info@sharifjamo.com MAILBOX in smtp_password using
+Plesk's server-side editor. Do this privately; do not send the password in chat.
+This is not the Plesk administrator password or the Gmail forwarding password.
+Keep valid PHP quoting: escape a literal single quote as \' and a backslash as \\.
+
+Configuration already uses:
+  SMTP hostname: sharifjamo.com
+  Port: 465 (implicit TLS)
+  Authentication username: info@sharifjamo.com
+  Sender and recipient: info@sharifjamo.com
+  Visitor's address: Reply-To only
+
+Use subscription-user ownership. The private directory should be writable by
+this site's PHP FPM user (0700 is suitable when PHP runs as that owner).
+config.php should be owner-readable only (0600). PHP creates delivery-state.json
+in the same directory, so the directory must be writable. Do not use 0777.
+If Plesk's open_basedir prevents access, ask hosting support to permit this
+specific private directory rather than disabling the restriction globally.
+
+4. CONFIRM SMTP WITH HOSTING SUPPORT
+Confirm PHP can connect to sharifjamo.com:465 and that its SMTP TLS certificate
+is valid for sharifjamo.com. If support supplies a different certified SMTP
+hostname, change only smtp_host in private config.php to that exact hostname.
+Certificate verification remains enabled; do not disable it to work around an
+SMTP certificate error. PHP's OpenSSL extension must be enabled.
+
+5. VERIFY THE DEPLOYMENT
+Open https://sharifjamo.com/api/contact.php in a browser. A JSON response saying
+"Please submit the contact form." with HTTP 405 is expected for a GET request.
+If PHP source is downloaded or displayed, stop: PHP is not executing for this
+path. Have hosting support correct PHP handling before continuing.
+
+Open https://sharifjamo.com/#/Contact and submit one clearly labeled test message
+using an email address you control. Confirm:
+  - The form shows "Sending...", followed by confirmation.
+  - The message reaches the info mailbox and its existing Gmail forwarding.
+  - Replying targets the visitor's email address.
+  - The message is not in Spam/Junk.
+
+SMTP acceptance is not proof of inbox delivery: check the receiving mailbox.
+No real delivery has been verified by the local tests.
+
+6. IF SOMETHING FAILS
+503 "not available yet": check private config location and the mailbox password.
+503 "could not send": check Plesk PHP/mail logs, private directory write access,
+the SMTP credentials, outbound port 465, OpenSSL, and SMTP certificate validity.
+429: the local form limit has been reached; wait or use direct email.
+The form permits at most 12 attempts/hour globally and 3/IP/hour, with 30 seconds
+between attempts per IP. This leaves capacity under the mailbox's 20/hour cap.
+The domain's other outgoing mail also counts toward the hosting mailbox limit.
+Do not delete the delivery state to bypass the host's sending limits.
+
+SERVER NOTES
+The endpoint uses PHPMailer v7.2.0, vendored with its license in api/lib/PHPMailer.
+No Composer installation is needed. Private state contains request hashes and
+timestamps, not names, addresses or message text. Send failures retain the form
+contents. Retrying unchanged contents reuses a request ID to prevent an extra
+send after a lost successful response. There are no automatic visitor replies.
+
+LOCAL CHECKS
+  npm test -- --watchAll=false --runInBand
+  node scripts/test-contact-server.mjs
+The second command requires PHP_BIN or the workspace's portable .tools/php/php.exe.
+It uses a fake transport and sends no real messages.
+The React development server cannot execute PHP; live delivery is tested on Plesk.

@@ -1,70 +1,47 @@
-# Getting Started with Create React App
+# Sharif Jamo — portfolio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A single-page React site (Create React App, React Router, Framer Motion).
 
-## Available Scripts
+## Run it
 
-In the project directory, you can run:
+```bash
+npm start
+```
 
-### `npm start`
+```bash
+npm test
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```bash
+npm run build
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Where things live
 
-### `npm test`
+| Path | What it is |
+| --- | --- |
+| `src/redesign/data.js` | **All content.** Profile, projects, experience, resume, services, FAQs. Edit text here. |
+| `src/redesign/styles.css` | The whole design system. Colours for dark and light mode are the tokens at the top. |
+| `src/redesign/ui.js` | Shared building blocks: buttons, icons, logo, reveals, project cards, marquee. |
+| `src/redesign/Project.js` | The one template every case study uses. |
+| `src/redesign/projectMedia.js` | Active covers, curated screenshots, captions and their matching deliverable sections. |
+| `src/redesign/Timeline.js` | The experience timeline (Home and Resume). |
+| `src/redesign/motion.js` | The animation preference (system setting plus the footer switch). |
+| `src/assets/Project_img/` | Project covers and gallery images. |
+| `public/` | Favicon, app icons, social-share image, `index.html`. |
+| `_removed/` | Everything taken out during the audit, with a log of what and why. |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Common edits
 
-### `npm run build`
+- **Change your title or bio:** `profile` in `data.js`.
+- **Add a project:** copy an entry in `projectEntries` in `data.js`, keep every field, then add its media entry in `projectMedia.js`. The work index, filters, case study page and tests pick it up.
+- **Change the accent colour:** `--accent` in `styles.css` (once for dark, once for light).
+- **Swap a project image:** update `projectMedia.js`. Each gallery image's `relatedTo` must match the deliverable heading it illustrates. Keep complete screens, explanatory captions and intentional image counts; WhisperLM uses one cover and one supporting image.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Notes
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The Resume page's print button opens the checked, two-page PDF in `public/resume/` so its layout does not depend on browser print settings or expanded timeline items. To update it after changing resume content, run `node scripts/export-resume-data.cjs`, then `python scripts/build_resume.py` with ReportLab installed. The complete web resume retains the longer experience descriptions; the print edition uses concise highlights.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- The site follows the visitor's system "reduce motion" setting. The switch in the footer overrides it.
+- The theme follows the system light/dark setting until the visitor picks one.
+- The contact form posts to `public/api/contact.php`, which uses authenticated SMTP on Plesk. Configure the mailbox password outside the document root before deployment. See `deployment/plesk/PLESK-SETUP.txt`; never add SMTP credentials to React environment variables.
