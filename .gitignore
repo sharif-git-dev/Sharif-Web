@@ -21,3 +21,22 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Private server credentials and generated deployment packages
+/private/
+/plesk-contact-package/
+/plesk-contact-package.zip
+/.tools/
+
+# Local previews, backups and generated deliverables
+/tmp/
+/output/
+/.codex-backups/
+/.claude/
+*.zip
+/*-preview.jpg
+/layered-project-thumbnails.jpg
+__pycache__/
+.env
+.env.*
+!.env.example
